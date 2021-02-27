@@ -1,153 +1,253 @@
-const templates = {
+function _createForOfIteratorHelper(o, allowArrayLike) { var it; if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = o[Symbol.iterator](); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+var templates = {
     /* eslint-disable */
     group: function anonymous(it) {
-        let out = '<div id="' + (it.group_id) + '" class="rules-group-container">   <div class="rules-group-header">     <div class="btn-group pull-right group-actions">       <button type="button" class="btn btn-xs btn-success" data-add="rule">         <i class="' + (it.icons.add_rule) + '"></i> ' + (it.translate("add_rule")) + '       </button>       ';
+        var out = '<div id="' + it.group_id + '" class="rules-group-container">   <div class="rules-group-header">     <div class="btn-group pull-right group-actions">       <button type="button" class="btn btn-xs btn-success" data-add="rule">         <i class="' + it.icons.add_rule + '"></i> ' + it.translate("add_rule") + '       </button>       ';
+
         if (it.settings.allow_groups === -1 || it.settings.allow_groups >= it.level) {
-            out += '         <button type="button" class="btn btn-xs btn-success" data-add="group">           <i class="' + (it.icons.add_group) + '"></i> ' + (it.translate("add_group")) + '         </button>       ';
+            out += '         <button type="button" class="btn btn-xs btn-success" data-add="group">           <i class="' + it.icons.add_group + '"></i> ' + it.translate("add_group") + '         </button>       ';
         }
+
         out += '       ';
+
         if (it.level > 1) {
-            out += '         <button type="button" class="btn btn-xs btn-danger" data-delete="group">           <i class="' + (it.icons.remove_group) + '"></i> ' + (it.translate("delete_group")) + '         </button>       ';
+            out += '         <button type="button" class="btn btn-xs btn-danger" data-delete="group">           <i class="' + it.icons.remove_group + '"></i> ' + it.translate("delete_group") + '         </button>       ';
         }
+
         out += '     </div>     <div class="btn-group group-conditions">       ';
-        const _val1 = it.conditions;
+        var _val1 = it.conditions;
+
         if (_val1) {
-            for (const condition of _val1) {
-                out += '         <label class="btn btn-xs btn-primary">           <input type="radio" name="' + (it.group_id) + '_cond" value="' + (condition) + '"> ' + (it.translate("conditions", condition)) + '         </label>       ';
+            var _iterator = _createForOfIteratorHelper(_val1),
+                _step;
+
+            try {
+                for (_iterator.s(); !(_step = _iterator.n()).done;) {
+                    var condition = _step.value;
+                    out += '         <label class="btn btn-xs btn-primary">           <input type="radio" name="' + it.group_id + '_cond" value="' + condition + '"> ' + it.translate("conditions", condition) + '         </label>       ';
+                }
+            } catch (err) {
+                _iterator.e(err);
+            } finally {
+                _iterator.f();
             }
         }
+
         out += '     </div>     ';
+
         if (it.settings.display_errors) {
-            out += '       <div class="error-container"><i class="' + (it.icons.error) + '"></i></div>     ';
+            out += '       <div class="error-container"><i class="' + it.icons.error + '"></i></div>     ';
         }
+
         out += '   </div>   <div class=rules-group-body>     <div class=rules-list></div>   </div> </div>';
         return out;
     },
     rule: function anonymous(it) {
-        let out = '<div id="' + (it.rule_id) + '" class="rule-container">   <div class="rule-header">     <div class="btn-group pull-right rule-actions">       <button type="button" class="btn btn-xs btn-danger" data-delete="rule">         <i class="' + (it.icons.remove_rule) + '"></i> ' + (it.translate("delete_rule")) + '       </button>     </div>   </div>   ';
+        var out = '<div id="' + it.rule_id + '" class="rule-container">   <div class="rule-header">     <div class="btn-group pull-right rule-actions">       <button type="button" class="btn btn-xs btn-danger" data-delete="rule">         <i class="' + it.icons.remove_rule + '"></i> ' + it.translate("delete_rule") + '       </button>     </div>   </div>   ';
+
         if (it.settings.display_errors) {
-            out += '     <div class="error-container"><i class="' + (it.icons.error) + '"></i></div>   ';
+            out += '     <div class="error-container"><i class="' + it.icons.error + '"></i></div>   ';
         }
+
         out += '   <div class="rule-filter-container"></div>   <div class="rule-operator-container"></div>   <div class="rule-value-container"></div> </div>';
         return out;
     },
     filterSelect: function anonymous(it) {
-        let out = '';
+        var out = '';
         var optgroup = null;
-        out += ' <select class="form-control" name="' + (it.rule.id) + '_filter">   ';
+        out += ' <select class="form-control" name="' + it.rule.id + '_filter">   ';
+
         if (it.settings.display_empty_filter) {
-            out += '     <option value="-1">' + (it.settings.select_placeholder) + '</option>   ';
+            out += '     <option value="-1">' + it.settings.select_placeholder + '</option>   ';
         }
+
         out += '   ';
-        const _val1 = it.filters;
+        var _val1 = it.filters;
+
         if (_val1) {
-            for (const filter of _val1) {
-                out += '     ';
-                if (optgroup !== filter.optgroup) {
-                    out += '       ';
-                    if (optgroup !== null) {
-                        out += '</optgroup>';
-                    }
-                    out += '       ';
-                    if ((optgroup = filter.optgroup) !== null) {
-                        out += '         <optgroup label="' + (it.translate(it.settings.optgroups[optgroup])) + '">       ';
-                    }
+            var _iterator2 = _createForOfIteratorHelper(_val1),
+                _step2;
+
+            try {
+                for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
+                    var filter = _step2.value;
                     out += '     ';
+
+                    if (optgroup !== filter.optgroup) {
+                        out += '       ';
+
+                        if (optgroup !== null) {
+                            out += '</optgroup>';
+                        }
+
+                        out += '       ';
+
+                        if ((optgroup = filter.optgroup) !== null) {
+                            out += '         <optgroup label="' + it.translate(it.settings.optgroups[optgroup]) + '">       ';
+                        }
+
+                        out += '     ';
+                    }
+
+                    out += '     <option value="' + filter.id + '" ';
+
+                    if (filter.icon) {
+                        out += 'data-icon="' + filter.icon + '"';
+                    }
+
+                    out += '>' + it.translate(filter.label) + '</option>   ';
                 }
-                out += '     <option value="' + (filter.id) + '" ';
-                if (filter.icon) {
-                    out += 'data-icon="' + (filter.icon) + '"';
-                }
-                out += '>' + (it.translate(filter.label)) + '</option>   ';
+            } catch (err) {
+                _iterator2.e(err);
+            } finally {
+                _iterator2.f();
             }
         }
+
         out += '   ';
+
         if (optgroup !== null) {
             out += '</optgroup>';
         }
+
         out += ' </select>';
         return out;
     },
-    operatorSelect: function anonymous(it
-    ) {
-        let out = '';
+    operatorSelect: function anonymous(it) {
+        var out = '';
+
         if (it.operators.length === 1) {
-            out += ' <span> ' + (it.translate("operators", it.operators[0].type)) + ' </span> ';
+            out += ' <span> ' + it.translate("operators", it.operators[0].type) + ' </span> ';
         }
+
         out += ' ';
         var optgroup = null;
         out += ' <select class="form-control ';
+
         if (it.operators.length === 1) {
             out += 'hide';
         }
-        out += '" name="' + (it.rule.id) + '_operator">   ';
-        const _val1 = it.operators;
+
+        out += '" name="' + it.rule.id + '_operator">   ';
+        var _val1 = it.operators;
+
         if (_val1) {
-            for (const operator of _val1) {
-                out += '     ';
-                if (optgroup !== operator.optgroup) {
-                    out += '       ';
-                    if (optgroup !== null) {
-                        out += '</optgroup>';
-                    }
-                    out += '       ';
-                    if ((optgroup = operator.optgroup) !== null) {
-                        out += '         <optgroup label="' + (it.translate(it.settings.optgroups[optgroup])) + '">       ';
-                    }
+            var _iterator3 = _createForOfIteratorHelper(_val1),
+                _step3;
+
+            try {
+                for (_iterator3.s(); !(_step3 = _iterator3.n()).done;) {
+                    var operator = _step3.value;
                     out += '     ';
+
+                    if (optgroup !== operator.optgroup) {
+                        out += '       ';
+
+                        if (optgroup !== null) {
+                            out += '</optgroup>';
+                        }
+
+                        out += '       ';
+
+                        if ((optgroup = operator.optgroup) !== null) {
+                            out += '         <optgroup label="' + it.translate(it.settings.optgroups[optgroup]) + '">       ';
+                        }
+
+                        out += '     ';
+                    }
+
+                    out += '     <option value="' + operator.type + '" ';
+
+                    if (operator.icon) {
+                        out += 'data-icon="' + operator.icon + '"';
+                    }
+
+                    out += '>' + it.translate("operators", operator.type) + '</option>   ';
                 }
-                out += '     <option value="' + (operator.type) + '" ';
-                if (operator.icon) {
-                    out += 'data-icon="' + (operator.icon) + '"';
-                }
-                out += '>' + (it.translate("operators", operator.type)) + '</option>   ';
+            } catch (err) {
+                _iterator3.e(err);
+            } finally {
+                _iterator3.f();
             }
         }
+
         out += '   ';
+
         if (optgroup !== null) {
             out += '</optgroup>';
         }
+
         out += ' </select>';
         return out;
     },
     ruleValueSelect: function anonymous(it) {
-        let out = '';
+        var out = '';
         var optgroup = null;
-        out += ' <select class="form-control" name="' + (it.name) + '" ';
+        out += ' <select class="form-control" name="' + it.name + '" ';
+
         if (it.rule.filter.multiple) {
             out += 'multiple';
         }
+
         out += '>   ';
+
         if (it.rule.filter.placeholder) {
-            out += '     <option value="' + (it.rule.filter.placeholder_value) + '" disabled selected>' + (it.rule.filter.placeholder) + '</option>   ';
+            out += '     <option value="' + it.rule.filter.placeholder_value + '" disabled selected>' + it.rule.filter.placeholder + '</option>   ';
         }
+
         out += '   ';
-        const _val1 = it.rule.filter.values;
+        var _val1 = it.rule.filter.values;
+
         if (_val1) {
-            for (const entry of _val1) {
-                out += '     ';
-                if (optgroup !== entry.optgroup) {
-                    out += '       ';
-                    if (optgroup !== null) {
-                        out += '</optgroup>';
-                    }
-                    out += '       ';
-                    if ((optgroup = entry.optgroup) !== null) {
-                        out += '         <optgroup label="' + (it.translate(it.settings.optgroups[optgroup])) + '">       ';
-                    }
+            var _iterator4 = _createForOfIteratorHelper(_val1),
+                _step4;
+
+            try {
+                for (_iterator4.s(); !(_step4 = _iterator4.n()).done;) {
+                    var entry = _step4.value;
                     out += '     ';
+
+                    if (optgroup !== entry.optgroup) {
+                        out += '       ';
+
+                        if (optgroup !== null) {
+                            out += '</optgroup>';
+                        }
+
+                        out += '       ';
+
+                        if ((optgroup = entry.optgroup) !== null) {
+                            out += '         <optgroup label="' + it.translate(it.settings.optgroups[optgroup]) + '">       ';
+                        }
+
+                        out += '     ';
+                    }
+
+                    out += '     <option value="' + entry.value + '">' + entry.label + '</option>   ';
                 }
-                out += '     <option value="' + (entry.value) + '">' + (entry.label) + '</option>   ';
+            } catch (err) {
+                _iterator4.e(err);
+            } finally {
+                _iterator4.f();
             }
         }
+
         out += '   ';
+
         if (optgroup !== null) {
             out += '</optgroup>';
         }
+
         out += ' </select>';
         return out;
-    },
+    }
     /* eslint-enable */
+
 };
 
 QueryBuilder.templates = templates;

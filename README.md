@@ -64,7 +64,8 @@ jQuery-QueryBuilder is available on [jsDelivr](https://www.jsdelivr.com/package/
 
 #### Run
 
-Install Node dependencies `npm install` then run `grunt` in the root directory to generate production files inside `dist`.
+Install Node dependencies `
+` then run `grunt` in the root directory to generate production files inside `dist`.
 
 #### Options
 
