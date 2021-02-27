@@ -10,7 +10,6 @@
   "main": "dist/js/query-builder.js",
   "dependencies": {
     "bootstrap": "^3.4.1",
-    "dot": "^1.1.3",
     "jquery": "^3.5.1",
     "jquery-extendext": "^1.0.0",
     "moment": "^2.29.1",
@@ -64,10 +63,10 @@
   "homepage": "https://querybuilder.js.org",
   "repository": {
     "type": "git",
-    "url": "git://github.com/mistic100/jQuery-QueryBuilder.git"
+    "url": "git://github.com/lol768/jQuery-QueryBuilder.git"
   },
   "bugs": {
-    "url": "https://github.com/mistic100/jQuery-QueryBuilder/issues"
+    "url": "https://github.com/lol768/jQuery-QueryBuilder/issues"
   },
   "scripts": {
     "build": "grunt",

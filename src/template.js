@@ -1,109 +1,156 @@
-QueryBuilder.templates.group = '\
-<div id="{{= it.group_id }}" class="rules-group-container"> \
-  <div class="rules-group-header"> \
-    <div class="btn-group pull-right group-actions"> \
-      <button type="button" class="btn btn-xs btn-success" data-add="rule"> \
-        <i class="{{= it.icons.add_rule }}"></i> {{= it.translate("add_rule") }} \
-      </button> \
-      {{? it.settings.allow_groups===-1 || it.settings.allow_groups>=it.level }} \
-        <button type="button" class="btn btn-xs btn-success" data-add="group"> \
-          <i class="{{= it.icons.add_group }}"></i> {{= it.translate("add_group") }} \
-        </button> \
-      {{?}} \
-      {{? it.level>1 }} \
-        <button type="button" class="btn btn-xs btn-danger" data-delete="group"> \
-          <i class="{{= it.icons.remove_group }}"></i> {{= it.translate("delete_group") }} \
-        </button> \
-      {{?}} \
-    </div> \
-    <div class="btn-group group-conditions"> \
-      {{~ it.conditions: condition }} \
-        <label class="btn btn-xs btn-primary"> \
-          <input type="radio" name="{{= it.group_id }}_cond" value="{{= condition }}"> {{= it.translate("conditions", condition) }} \
-        </label> \
-      {{~}} \
-    </div> \
-    {{? it.settings.display_errors }} \
-      <div class="error-container"><i class="{{= it.icons.error }}"></i></div> \
-    {{?}} \
-  </div> \
-  <div class=rules-group-body> \
-    <div class=rules-list></div> \
-  </div> \
-</div>';
+const templates = {
+    /* eslint-disable */
+    group: function anonymous(it) {
+        let out = '<div id="' + (it.group_id) + '" class="rules-group-container">   <div class="rules-group-header">     <div class="btn-group pull-right group-actions">       <button type="button" class="btn btn-xs btn-success" data-add="rule">         <i class="' + (it.icons.add_rule) + '"></i> ' + (it.translate("add_rule")) + '       </button>       ';
+        if (it.settings.allow_groups === -1 || it.settings.allow_groups >= it.level) {
+            out += '         <button type="button" class="btn btn-xs btn-success" data-add="group">           <i class="' + (it.icons.add_group) + '"></i> ' + (it.translate("add_group")) + '         </button>       ';
+        }
+        out += '       ';
+        if (it.level > 1) {
+            out += '         <button type="button" class="btn btn-xs btn-danger" data-delete="group">           <i class="' + (it.icons.remove_group) + '"></i> ' + (it.translate("delete_group")) + '         </button>       ';
+        }
+        out += '     </div>     <div class="btn-group group-conditions">       ';
+        const _val1 = it.conditions;
+        if (_val1) {
+            for (const condition of _val1) {
+                out += '         <label class="btn btn-xs btn-primary">           <input type="radio" name="' + (it.group_id) + '_cond" value="' + (condition) + '"> ' + (it.translate("conditions", condition)) + '         </label>       ';
+            }
+        }
+        out += '     </div>     ';
+        if (it.settings.display_errors) {
+            out += '       <div class="error-container"><i class="' + (it.icons.error) + '"></i></div>     ';
+        }
+        out += '   </div>   <div class=rules-group-body>     <div class=rules-list></div>   </div> </div>';
+        return out;
+    },
+    rule: function anonymous(it) {
+        let out = '<div id="' + (it.rule_id) + '" class="rule-container">   <div class="rule-header">     <div class="btn-group pull-right rule-actions">       <button type="button" class="btn btn-xs btn-danger" data-delete="rule">         <i class="' + (it.icons.remove_rule) + '"></i> ' + (it.translate("delete_rule")) + '       </button>     </div>   </div>   ';
+        if (it.settings.display_errors) {
+            out += '     <div class="error-container"><i class="' + (it.icons.error) + '"></i></div>   ';
+        }
+        out += '   <div class="rule-filter-container"></div>   <div class="rule-operator-container"></div>   <div class="rule-value-container"></div> </div>';
+        return out;
+    },
+    filterSelect: function anonymous(it) {
+        let out = '';
+        var optgroup = null;
+        out += ' <select class="form-control" name="' + (it.rule.id) + '_filter">   ';
+        if (it.settings.display_empty_filter) {
+            out += '     <option value="-1">' + (it.settings.select_placeholder) + '</option>   ';
+        }
+        out += '   ';
+        const _val1 = it.filters;
+        if (_val1) {
+            for (const filter of _val1) {
+                out += '     ';
+                if (optgroup !== filter.optgroup) {
+                    out += '       ';
+                    if (optgroup !== null) {
+                        out += '</optgroup>';
+                    }
+                    out += '       ';
+                    if ((optgroup = filter.optgroup) !== null) {
+                        out += '         <optgroup label="' + (it.translate(it.settings.optgroups[optgroup])) + '">       ';
+                    }
+                    out += '     ';
+                }
+                out += '     <option value="' + (filter.id) + '" ';
+                if (filter.icon) {
+                    out += 'data-icon="' + (filter.icon) + '"';
+                }
+                out += '>' + (it.translate(filter.label)) + '</option>   ';
+            }
+        }
+        out += '   ';
+        if (optgroup !== null) {
+            out += '</optgroup>';
+        }
+        out += ' </select>';
+        return out;
+    },
+    operatorSelect: function anonymous(it
+    ) {
+        let out = '';
+        if (it.operators.length === 1) {
+            out += ' <span> ' + (it.translate("operators", it.operators[0].type)) + ' </span> ';
+        }
+        out += ' ';
+        var optgroup = null;
+        out += ' <select class="form-control ';
+        if (it.operators.length === 1) {
+            out += 'hide';
+        }
+        out += '" name="' + (it.rule.id) + '_operator">   ';
+        const _val1 = it.operators;
+        if (_val1) {
+            for (const operator of _val1) {
+                out += '     ';
+                if (optgroup !== operator.optgroup) {
+                    out += '       ';
+                    if (optgroup !== null) {
+                        out += '</optgroup>';
+                    }
+                    out += '       ';
+                    if ((optgroup = operator.optgroup) !== null) {
+                        out += '         <optgroup label="' + (it.translate(it.settings.optgroups[optgroup])) + '">       ';
+                    }
+                    out += '     ';
+                }
+                out += '     <option value="' + (operator.type) + '" ';
+                if (operator.icon) {
+                    out += 'data-icon="' + (operator.icon) + '"';
+                }
+                out += '>' + (it.translate("operators", operator.type)) + '</option>   ';
+            }
+        }
+        out += '   ';
+        if (optgroup !== null) {
+            out += '</optgroup>';
+        }
+        out += ' </select>';
+        return out;
+    },
+    ruleValueSelect: function anonymous(it) {
+        let out = '';
+        var optgroup = null;
+        out += ' <select class="form-control" name="' + (it.name) + '" ';
+        if (it.rule.filter.multiple) {
+            out += 'multiple';
+        }
+        out += '>   ';
+        if (it.rule.filter.placeholder) {
+            out += '     <option value="' + (it.rule.filter.placeholder_value) + '" disabled selected>' + (it.rule.filter.placeholder) + '</option>   ';
+        }
+        out += '   ';
+        const _val1 = it.rule.filter.values;
+        if (_val1) {
+            for (const entry of _val1) {
+                out += '     ';
+                if (optgroup !== entry.optgroup) {
+                    out += '       ';
+                    if (optgroup !== null) {
+                        out += '</optgroup>';
+                    }
+                    out += '       ';
+                    if ((optgroup = entry.optgroup) !== null) {
+                        out += '         <optgroup label="' + (it.translate(it.settings.optgroups[optgroup])) + '">       ';
+                    }
+                    out += '     ';
+                }
+                out += '     <option value="' + (entry.value) + '">' + (entry.label) + '</option>   ';
+            }
+        }
+        out += '   ';
+        if (optgroup !== null) {
+            out += '</optgroup>';
+        }
+        out += ' </select>';
+        return out;
+    },
+    /* eslint-enable */
+};
 
-QueryBuilder.templates.rule = '\
-<div id="{{= it.rule_id }}" class="rule-container"> \
-  <div class="rule-header"> \
-    <div class="btn-group pull-right rule-actions"> \
-      <button type="button" class="btn btn-xs btn-danger" data-delete="rule"> \
-        <i class="{{= it.icons.remove_rule }}"></i> {{= it.translate("delete_rule") }} \
-      </button> \
-    </div> \
-  </div> \
-  {{? it.settings.display_errors }} \
-    <div class="error-container"><i class="{{= it.icons.error }}"></i></div> \
-  {{?}} \
-  <div class="rule-filter-container"></div> \
-  <div class="rule-operator-container"></div> \
-  <div class="rule-value-container"></div> \
-</div>';
-
-QueryBuilder.templates.filterSelect = '\
-{{ var optgroup = null; }} \
-<select class="form-control" name="{{= it.rule.id }}_filter"> \
-  {{? it.settings.display_empty_filter }} \
-    <option value="-1">{{= it.settings.select_placeholder }}</option> \
-  {{?}} \
-  {{~ it.filters: filter }} \
-    {{? optgroup !== filter.optgroup }} \
-      {{? optgroup !== null }}</optgroup>{{?}} \
-      {{? (optgroup = filter.optgroup) !== null }} \
-        <optgroup label="{{= it.translate(it.settings.optgroups[optgroup]) }}"> \
-      {{?}} \
-    {{?}} \
-    <option value="{{= filter.id }}" {{? filter.icon}}data-icon="{{= filter.icon}}"{{?}}>{{= it.translate(filter.label) }}</option> \
-  {{~}} \
-  {{? optgroup !== null }}</optgroup>{{?}} \
-</select>';
-
-QueryBuilder.templates.operatorSelect = '\
-{{? it.operators.length === 1 }} \
-<span> \
-{{= it.translate("operators", it.operators[0].type) }} \
-</span> \
-{{?}} \
-{{ var optgroup = null; }} \
-<select class="form-control {{? it.operators.length === 1 }}hide{{?}}" name="{{= it.rule.id }}_operator"> \
-  {{~ it.operators: operator }} \
-    {{? optgroup !== operator.optgroup }} \
-      {{? optgroup !== null }}</optgroup>{{?}} \
-      {{? (optgroup = operator.optgroup) !== null }} \
-        <optgroup label="{{= it.translate(it.settings.optgroups[optgroup]) }}"> \
-      {{?}} \
-    {{?}} \
-    <option value="{{= operator.type }}" {{? operator.icon}}data-icon="{{= operator.icon}}"{{?}}>{{= it.translate("operators", operator.type) }}</option> \
-  {{~}} \
-  {{? optgroup !== null }}</optgroup>{{?}} \
-</select>';
-
-QueryBuilder.templates.ruleValueSelect = '\
-{{ var optgroup = null; }} \
-<select class="form-control" name="{{= it.name }}" {{? it.rule.filter.multiple }}multiple{{?}}> \
-  {{? it.rule.filter.placeholder }} \
-    <option value="{{= it.rule.filter.placeholder_value }}" disabled selected>{{= it.rule.filter.placeholder }}</option> \
-  {{?}} \
-  {{~ it.rule.filter.values: entry }} \
-    {{? optgroup !== entry.optgroup }} \
-      {{? optgroup !== null }}</optgroup>{{?}} \
-      {{? (optgroup = entry.optgroup) !== null }} \
-        <optgroup label="{{= it.translate(it.settings.optgroups[optgroup]) }}"> \
-      {{?}} \
-    {{?}} \
-    <option value="{{= entry.value }}">{{= entry.label }}</option> \
-  {{~}} \
-  {{? optgroup !== null }}</optgroup>{{?}} \
-</select>';
+QueryBuilder.templates = templates;
 
 /**
  * Returns group's HTML

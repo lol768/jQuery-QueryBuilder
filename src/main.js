@@ -122,7 +122,7 @@ var QueryBuilder = function($el, options) {
             this.templates[tpl] = QueryBuilder.templates[tpl];
         }
         if (typeof this.templates[tpl] == 'string') {
-            this.templates[tpl] = doT.template(this.templates[tpl]);
+            console.error('Pre-compile your templates, strings are no longer supported.');
         }
     }, this);
 

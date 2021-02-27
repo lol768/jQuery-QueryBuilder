@@ -7,7 +7,9 @@
 [![Dependencies Status](https://david-dm.org/mistic100/jQuery-QueryBuilder/status.svg?style=flat-square)](https://david-dm.org/mistic100/jQuery-QueryBuilder)
 [![gitlocalized](https://gitlocalize.com/repo/5259/whole_project/badge.svg)](https://gitlocalize.com/repo/5259/whole_project?utm_source=badge)
 
-jQuery plugin offering an simple interface to create complex queries.
+jQuery plugin offering a simple interface to create complex queries.
+
+**Now with 100% less unsafe-eval nonsense!**
 
 [![screenshot](https://raw.githubusercontent.com/mistic100/jQuery-QueryBuilder/master/examples/screenshot.png)](https://querybuilder.js.org)
 
@@ -43,18 +45,15 @@ jQuery-QueryBuilder is available on [jsDelivr](https://www.jsdelivr.com/package/
  * [jQuery 3](https://jquery.com)
  * [Bootstrap 3](https://getbootstrap.com/docs/3.3) (CSS only)
  * [jQuery.extendext](https://github.com/mistic100/jQuery.extendext)
- * [doT.js](https://olado.github.io/doT)
  * [MomentJS](https://momentjs.com) (optional, for Date/Time validation)
  * [SQL Parser](https://github.com/mistic100/sql-parser) (optional, for SQL methods)
  * Other Bootstrap/jQuery plugins used by plugins
 
-($.extendext and doT.js are directly included in the [standalone](https://github.com/mistic100/jQuery-QueryBuilder/blob/master/dist/js/query-builder.standalone.js) file)
+($.extendext is directly included in the [standalone](https://github.com/mistic100/jQuery-QueryBuilder/blob/master/dist/js/query-builder.standalone.js) file)
 
 ### Browser support
  * Internet Explorer >= 9
  * All other recent browsers
-
-
 
 ## Build
 
